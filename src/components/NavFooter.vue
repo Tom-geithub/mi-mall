@@ -1,7 +1,7 @@
 <!-- 公用尾部 -->
 
 <template>
-    <div></div>
+    <div>nav-footer</div>
 </template>
 <script>
 export default {

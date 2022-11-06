@@ -1,7 +1,8 @@
 <!-- 共用头部 -->
 
+<!-- 公用头部 -->
 <template>
-    <div></div>
+    <div>nav-header</div>
 </template>
 <script>
 export default {
