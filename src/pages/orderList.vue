@@ -1,6 +1,6 @@
 <!-- 订单页面 -->
 <template>
-    <div></div>
+    <div>order-list</div>
 </template>
 <script>
 export default{
