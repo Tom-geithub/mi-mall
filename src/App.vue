@@ -17,14 +17,11 @@ export default{
     }
   },
   mounted (){
-    // storage.setItem('abc',{a:1},'user');
-    this.axios.get('/pet/1').then((res)=>{
-      this.res=res;
-    })
+ 
   } 
 }
 </script>
 
 <style>
-
+@import './assets/scss/reset.scss';
 </style>
