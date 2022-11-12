@@ -22,9 +22,11 @@
         <!-- 导航栏 -->
         <div class="nav-header">
             <div class="container">
+                <!-- logo -->
                 <div class="header-logo">
                     <a href="/#/index"></a>
                 </div>
+                <!-- menu -->
                 <div class="header-menu">
                     <div class="item-menu">
                         <span>小米手机</span>
@@ -39,19 +41,31 @@
                         <div class="children"></div>
                     </div>
                 </div>
-                <div class="header-search"></div>
+                <!-- search -->
+                <div class="header-search">
+                    <div class="wrapper">
+                        <input type="text" name="keyword">
+                        <a href="javascript:;"></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
+
+
   
 <script>
 export default {
     name: "nav-header",
 };
 </script> 
+
+
+
 <style lang="scss" scoped>
 @import './../assets/scss/base.scss';
+@import './../assets/scss/mixin.scss';
 
 .header {
     .nav-topbar {
@@ -61,9 +75,10 @@ export default {
         color: #b0b0b0;
 
         .container {
-            display: flex; //:设置元素两边对齐  中间居中
-            justify-content: space-between; //水平方向居中
-            align-items: center; //垂直方向居中
+            // display: flex; //:设置元素两边对齐  中间居中
+            // justify-content: space-between; //水平方向居中
+            // align-items: center; //垂直方向居中
+            @include flex();
 
             a {
                 display: inline-block;
@@ -78,11 +93,7 @@ export default {
                 color: #ffffff;
 
                 .icon-cart {
-                    display: inline-block;
-                    width: 16px;
-                    height: 12px;
-                    margin-right: 4px;
-                    background: url("/public/imgs/icon-cart-checked.png") no-repeat center;
+                    @include bgImg(16px,12px,'/public/imgs/icon-cart-checked.png');
                     background-size: contain;
                 }
             }
@@ -92,9 +103,10 @@ export default {
     .nav-header {
         .container {
             height: 112px;
-            display: flex; //:设置元素两边对齐  中间居中
-            justify-content: space-between; //水平方向居中
-            align-items: center; //垂直方向居中
+            // display: flex; //:设置元素两边对齐  中间居中
+            // justify-content: space-between; //水平方向居中
+            // align-items: center; //垂直方向居中
+            @include flex();
 
             .header-logo {
                 display: inline-block;
@@ -109,20 +121,13 @@ export default {
 
                     &:before {
                         content: ' ';
-                        display: inline-block;
-                        width: 55px;
-                        height: 55px;
-                        background: url('/public/imgs/mi-logo.png') no-repeat center;
-                        background-size: 55px;
+                        @include bgImg(55px,55px,'/public/imgs/mi-logo.png',55px);
                         transition: margin .2s; //过渡动画
                     }
 
                     &:after {
                         content: ' ';
-                        display: inline-block;
-                        width: 55px;
-                        height: 55px;
-                        background: url('/public/imgs/mi-home.png') no-repeat center;
+                        @include bgImg(55px,55px,'/public/imgs/mi-home.png',55px);
                         background-size: 55px;
                     }
 
@@ -136,7 +141,7 @@ export default {
 
             .header-menu{
                 display: inline-block;
-                width: 200px;
+                width: 643px;
                 padding-left: 209px;
                 .item-menu{
                     display: inline-block;
@@ -144,11 +149,34 @@ export default {
                     font-weight: bold;
                     font-size: 16px;
                     line-height: 112px;
+                    margin-right: 20px;
                     span{
                         cursor:pointer;//让鼠标移上去是小手标志
                     }
                     &:hover{
                         
+                    }
+                }
+            }
+
+            .header-search{
+                width: 319px;
+                .wrapper{
+                    height: 50px;
+                    border: 1px solid #E0E0E0;
+                    display: flex;
+                    align-items: center;
+                    input{
+                        border: none;
+                        box-sizing: border-box;
+                        border-right: 1px solid #E0E0E0;
+                        width: 264px;
+                        height: 50px;
+                        padding-left: 14px;
+                    }
+                    a{
+                        @include bgImg(18px,18px,'/public/imgs/mi-home.png');
+                        margin-left: 17px;
                     }
                 }
             }
