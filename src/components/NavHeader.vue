@@ -10,9 +10,10 @@
                     <a href="javascript:;">协议规则</a>
                 </div>
                 <div class="topbar-user">
-                    <a href="javascript:;">登录</a>
-                    <a href="javascript:;">注册</a>
-                    <a href="javascript:;" class="my-cart">
+                    <a href="javascript:;" v-if="username">{{username}}</a>
+                    <a href="javascript:;" v-if="!username" @click="login">登录</a>
+                    <a href="javascript:;" v-if="username">我的订单</a>
+                    <a href="javascript:;" class="my-cart" @click="goToCart">
                         <span class="icon-cart"></span>
                         购物车
                     </a>
@@ -32,58 +33,13 @@
                         <span>小米手机</span>
                         <div class="children">
                              <ul>
-                                <li class="product">
-                                    <a href="" target="_blank">
+                                <li class="product" v-for="(item,index) in phoneList" :key="index">
+                                    <a :href="'/#/product/'+item.id" target="_blank">
                                         <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90" alt="">
+                                            <img :src="item.mainImage" :alt="item.subtitle">
                                         </div>
-                                        <div class="pro-name">小米CC9</div>
-                                        <div class="pro-price">1799元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90" alt="">
-                                        </div>
-                                        <div class="pro-name">小米CC9</div>
-                                        <div class="pro-price">1799元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90" alt="">
-                                        </div>
-                                        <div class="pro-name">小米CC9</div>
-                                        <div class="pro-price">1799元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90" alt="">
-                                        </div>
-                                        <div class="pro-name">小米CC9</div>
-                                        <div class="pro-price">1799元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90" alt="">
-                                        </div>
-                                        <div class="pro-name">小米CC9</div>
-                                        <div class="pro-price">1799元</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/a687e796bb4879cd0e93867177f800da.png?thumb=1&w=342&h=342&f=webp&q=90" alt="">
-                                        </div>
-                                        <div class="pro-name">小米CC9</div>
-                                        <div class="pro-price">1799元</div>
+                                        <div class="pro-name">{{item.name}}</div>
+                                        <div class="pro-price">{{item.price | currency}}</div>
                                     </a>
                                 </li>
                              </ul>
@@ -115,6 +71,41 @@
 <script>
 export default {
     name: "nav-header",
+    data (){
+        return{
+            username:'TOM',
+            phoneList:[]
+        }
+    },
+    filters:{
+        currency(val){
+            if(!val) return '0.00';
+            return val.toFixed(2)+'元';
+        }
+    },
+    mounted (){
+        this.getProductList();
+    },
+    methods:{
+        login (){
+            this.$router.push('/login');
+        },
+        getProductList(){
+            this.axios.get('/products',{
+                params:{
+                    categoryId:'100012'
+                }
+            }).then((res)=>{
+                if(res.list.length>6){
+                    this.phoneList=res.list.slice(0,6);
+                }
+            })
+        },
+        goToCart (){
+            this.$router.push('/cart');
+            //使用该方法才能跳转,获取参数将push改成params即可
+        }
+    }
 };
 </script> 
 
@@ -213,6 +204,7 @@ export default {
                         color:$colorA;
                         .children{
                             height: 220px;
+                            opacity: 1;
                         }
                     }
                     .children{
@@ -220,10 +212,13 @@ export default {
                         top: 112px;
                         left:0;
                         width: 1226px;
-                        height: 220px;
+                        height: 0;//默认关闭状态
+                        opacity: 0;//透明度 隐藏border下面的阴影
+                        overflow: hidden;//让内容隐藏起来
                         border-top: 1px solid #e5e5e5;
                         box-shadow: 0px 7px 6px 0px rgba(0,0,0,0.11);
                         z-index: 10;
+                        transition:all .5s;
                         .product{
                             position: relative;
                             float: left;
