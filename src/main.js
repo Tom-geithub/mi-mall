@@ -10,7 +10,7 @@ import App from './App.vue'
 
 /* 根据接口代理来配置请求地址 */
 axios.defaults.baseURL='/api';
-axios.defaults.timeout=8000;
+axios.defaults.timeout=8080;
 
 /* 根据接口环境变量来获取请求地址(使用其他两种跨域方式的情况下) */
 // axios.defaults.baseURL=env.baseURL;
