@@ -281,7 +281,7 @@ export default {
                         padding-left: 14px;
                     }
                     a{
-                        @include bgImg(18px,18px,'/public/imgs/mi-home.png');
+                        @include bgImg(18px,18px,'/public/imgs/icon-search.png');
                         margin-left: 17px;
                     }
                 }
