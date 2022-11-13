@@ -8,6 +8,9 @@ import VueAxios from 'vue-axios'
 // import env from './env'
 import App from './App.vue'
 
+
+
+
 /* 根据接口代理来配置请求地址 */
 axios.defaults.baseURL='/api';
 axios.defaults.timeout=8080;
