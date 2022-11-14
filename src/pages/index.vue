@@ -8,7 +8,16 @@
                     <ul class="menu-wrap">
                         <li class="menu-item">
                             <a href="javascript:;">手机 电话卡</a>
-                            <div class="children"></div>
+                            <div class="children">
+                                <ul v-for="(item, i) in menuList" :key="i">
+                                    <li v-for="(sub, j) in item" :key="j">
+                                        <a :href="sub ? '/#/product/' + sub.id : ' '">
+                                            <img :src="sub?sub.img:'/imgs/item-box-1.png'" alt="">
+                                            {{sub?sub.name:'小米9'}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li class="menu-item">
                             <a href="javascript:;">电视 盒子</a>
@@ -44,6 +53,7 @@
                         </li>
                     </ul>
                 </div>
+
                 <!-- 轮播图 -->
                 <swiper :options="swiperOption">
                     <swiper-slide v-for="(item, index) in slideList" :key="index">
@@ -121,6 +131,31 @@ export default {
                     id: '',
                     img: '/imgs/slider/slide-5.jpg'
                 }
+            ],
+            menuList: [
+                [
+                    {
+                        id: 30,
+                        img: '/imgs/item-box-1.png',
+                        name: '小米CC9'
+                    },
+                    {
+                        id: 31,
+                        img: '/imgs/item-box-2.png',
+                        name: '小米8青春版'
+                    },
+                    {
+                        id: 32,
+                        img: '/imgs/item-box-3.jpg',
+                        name: 'Redmi K20 Pro'
+                    },
+                    {
+                        id: 33,
+                        img: '/imgs/item-box-4.jpg',
+                        name: '移动4G专区'
+                    },
+                ],
+                [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]
             ]
         }
     }
@@ -130,11 +165,13 @@ export default {
 <style lang="scss" scoped>
 @import './../assets/scss/mixin.scss';
 @import './../assets/scss/config.scss';
+
 .index {
     .container {
         .swiper-box {
+
             // 轮播图菜单
-            .nav-menu{
+            .nav-menu {
                 position: absolute;
                 width: 264px;
                 height: 451px;
@@ -144,36 +181,77 @@ export default {
                 这里不能用opacity,因为字体和箭头也会变透明 */
                 background-color: #55585a8a;
                 box-sizing: border-box;
-                .menu-wrap{
-                    .menu-item{
+
+                .menu-wrap {
+                    .menu-item {
                         height: 50px;
                         line-height: 50px;
-                        a{
+
+                        a {
                             position: relative;
                             display: block;
                             font-size: 16px;
                             color: #ffffff;
                             padding-left: 30px;
-                            &:after{
+
+                            &:after {
                                 content: " ";
                                 position: absolute;
                                 right: 30px;
-                                top:17.5px;
-                                @include bgImg(10px,15px,'/public/imgs/icon-arrow.png');
+                                top: 17.5px;
+                                @include bgImg(10px, 15px, '/public/imgs/icon-arrow.png');
                             }
                         }
-                        &:hover{
+
+                        &:hover {
                             background-color: $colorA;
+                            .children{
+                                display: block;
+                            }
+                        }
+                        .children{
+                            display: none;
+                            position: absolute;
+                            width: 962px;
+                            top: 0;
+                            left: 264px;
+                            background-color: $colorG;
+                            border: 1px solid $colorH;
+                            transition: all 1s;//没用
+                            ul{
+                                display: flex;
+                                // justify-content: space-between;
+                                height: 75px;
+                                li{
+                                    height: 75px;
+                                    line-height: 75px;
+                                    flex: 1;
+                                    padding-left: 23px;
+                                }
+                                a{
+                                    color: $colorB;
+                                    font-size: 14px;
+                                }
+                                img{
+                                    width: 42px;
+                                    height: 35px;
+                                    vertical-align: middle;
+                                    margin-right: 15px;
+                                }
+                            }
                         }
                     }
                 }
             }
+
             // 轮播图
             .swiper-container {
                 height: 451px;
-                .swiper-button-prev{
+
+                .swiper-button-prev {
                     left: 274px;
                 }
+
                 img {
                     width: 100%;
                     height: 100%;
