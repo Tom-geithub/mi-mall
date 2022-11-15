@@ -7,8 +7,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 // import env from './env'
 import App from './App.vue'
-
-
+// 引入懒加载
+import VueLazyLoad from 'vue-lazyload'
 
 
 /* 根据接口代理来配置请求地址 */
@@ -33,6 +33,10 @@ axios.interceptors.response.use(function(response){
 
 
 Vue.use(VueAxios,axios)
+// 使用懒加载
+Vue.use(VueLazyLoad,{
+  loading:'/imgs/loading-svg/loading-bars.svg'
+})
 Vue.config.productionTip = false
 
 new Vue({

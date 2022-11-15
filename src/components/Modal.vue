@@ -5,7 +5,7 @@
             <div class="modal-dialog">
                 <!-- 头部 -->
                 <div class="modal-header">
-                    <span>提示</span>
+                    <span>{{title}}</span>
                     <a href="javascript:;" class="icon-close" @click="$emit('cancel')"></a>
                 </div>
                 <!-- 内容 -->
