@@ -221,7 +221,7 @@ export default {
                     img: '/imgs/ads/ads-4.jpg'
                 },
             ],
-            phoneList:[[],[]]
+            phoneList:[[1,1,1,1],[1,1,1,1]]
 
         }
     },
@@ -365,78 +365,79 @@ export default {
             margin-bottom: 50px;
         }
 
-        .product-box{
+        .product-box {
             background-color: $colorJ;
             padding: 30px 0 50px;
-            h2{
+
+            h2 {
                 font-size: $fontF;
                 height: 21px;
                 line-height: 21px;
                 color: $colorB;
                 margin-bottom: 20px;
             }
-            .wrapper{
+
+            .wrapper {
                 display: flex;
-                .banner-left{
+
+                .banner-left {
                     margin-right: 16px;
-                    img{
+
+                    img {
                         width: 224px;
                         height: 619px;
                     }
                 }
-                .list-box{
-                    .list{
+
+                .list-box {
+                    .list {
                         @include flex();
                         width: 986px;
                         margin-bottom: 14px;
-                        &:last-child{
+
+                        &:last-child {
                             margin-bottom: 0;
                         }
-                        .item{
+
+                        .item {
                             width: 236px;
                             height: 302px;
                             background-color: $colorG;
                             text-align: center;
                             span{
-                                display: inline-block;
-                                width: 67px;
-                                height: 24px;
-                                font-size: 14px;
-                                line-height: 24px;
-                                color: $colorG;
-                                &.new-pro{
-                                    background-color: #7ECF68;
-                                }
-                                &.kill-pro{
-                                    background-color: #e82626;
-                                }
+
                             }
-                            .item-img{
-                                img{
+
+                            .item-img {
+                                img {
                                     height: 195px;
                                     width: 100%;
                                 }
                             }
-                            .item-info{
-                                h3{
+
+                            .item-info {
+                                h3 {
                                     font-size: $fontJ;
                                     color: $colorB;
                                     line-height: $fontJ;
                                     font-weight: bold;
                                 }
-                                p{
+
+                                p {
                                     color: $colorD;
                                     line-height: 13px;
                                     margin: 6px auto 13px;
                                 }
-                                .price{
+
+                                .price {
                                     color: #F20A0A;
                                     font-size: $fontJ;
                                     font-weight: bold;
-                                    cursor:pointer;
-                                    &:after{
-                                        @include bgImg(22px,22px,'/public/imgs/icon-cart-hover.png');
-                                        content:' ';
+                                    cursor: pointer;
+
+                                    &:after {
+                                        @include bgImg(22px, 22px, '/public/imgs/icon-cart-hover.png');
+                                        content: ' ';
                                         margin-left: 5px;
                                         vertical-align: middle;
                                     }
