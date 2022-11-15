@@ -97,7 +97,7 @@
                                 <div class="item-info">
                                     <h3>{{item.name}}</h3>
                                     <p>{{item.subtitle}}</p>
-                                    <p class="price">{{item.price }}元</p>
+                                    <p class="price" @click="addCart(item.id)">{{item.price }}元</p>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
         <!-- 服务条 -->
         <service-bar></service-bar>
         <!-- 弹窗 -->
-        <modal title="提示" sureText="查看购物车" btnType="1" modal-type="middle" :showModal="true">
+        <modal title="提示" sureText="查看购物车" btnType="1" modal-type="middle" :showModal="showModal" @submit="goTocart" @cancel="showModal=false">
             <template v-slot:body>
                 <p>商品添加成功！</p>
             </template>
@@ -221,7 +221,8 @@ export default {
                     img: '/imgs/ads/ads-4.jpg'
                 },
             ],
-            phoneList:[[1,1,1,1],[1,1,1,1]]
+            phoneList:[[1,1,1,1],[1,1,1,1]],
+            showModal:false
 
         }
     },
@@ -240,6 +241,12 @@ export default {
                 res.list=res.list.slice(6,14);
                 this.phoneList=[res.list.slice(0,4),res.list.slice(4,8)];
             })
+        },
+        addCart (){
+            this.showModal=true;
+        },
+        goTocart (){
+            this.$router.push('cart');
         }
     }
 }
