@@ -12,8 +12,8 @@
                                 <ul v-for="(item, i) in menuList" :key="i">
                                     <li v-for="(sub, j) in item" :key="j">
                                         <a :href="sub ? '/#/product/' + sub.id : ' '">
-                                            <img :src="sub?sub.img:'/imgs/item-box-1.png'" alt="">
-                                            {{sub?sub.name:'小米9'}}
+                                            <img :src="sub ? sub.img : '/imgs/item-box-1.png'" alt="">
+                                            {{ sub ? sub.name : '小米9' }}
                                         </a>
                                     </li>
                                 </ul>
@@ -67,7 +67,7 @@
             </div>
             <!-- 广告位 -->
             <div class="ads-box">
-                <a :href="'/#/product/'+item.id" v-for="(item,index) in adsList" :key="index">
+                <a :href="'/#/product/' + item.id" v-for="(item, index) in adsList" :key="index">
                     <img :src="item.img" alt="">
                 </a>
             </div>
@@ -77,8 +77,35 @@
                     <img src="/imgs/banner-1.png" alt="">
                 </a>
             </div>
-            <div class="product-box"></div>
+            <!-- 手机商品 -->
+            <div class="product-box">
+                <div class="container">
+                    <h2>手机</h2>
+                </div>
+                <div class="wrapper">
+                    <div class="banner-left">
+                        <a :href="'/#/product/35'"><img src="/imgs/mix-alpha.jpg" alt=""></a>
+                    </div>
+                    <div class="list-box">
+                        <div class="list" v-for="(arr,i) in phoneList" :key="i">
+                            <div class="item" v-for="(item,j) in arr" :key="j"> 
+                                <span>新品</span>
+                                <div class="item-img">
+                                    <img src="\imgs\item-box-3.jpg" alt="">
+                                </div>
+                                <div class="item-info">
+                                    <h3>小米9</h3>
+                                    <p>晓龙855，索尼4800万超广角微距</p>
+                                    <p class="price">2999元</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
+        <!-- 服务条 -->
         <service-bar></service-bar>
     </div>
 </template>
@@ -167,24 +194,25 @@ export default {
                 ],
                 [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]
             ],
-            adsList:[
+            adsList: [
                 {
-                    id:33,
-                    img:'/imgs/ads/ads-1.png'
+                    id: 33,
+                    img: '/imgs/ads/ads-1.png'
                 },
                 {
-                    id:48,
-                    img:'/imgs/ads/ads-2.jpg'
+                    id: 48,
+                    img: '/imgs/ads/ads-2.jpg'
                 },
                 {
-                    id:45,
-                    img:'/imgs/ads/ads-3.png'
+                    id: 45,
+                    img: '/imgs/ads/ads-3.png'
                 },
                 {
-                    id:47,
-                    img:'/imgs/ads/ads-4.jpg'
+                    id: 47,
+                    img: '/imgs/ads/ads-4.jpg'
                 },
-            ]
+            ],
+            phoneList:[[1,1,1,1],[1,1,1,1]]
 
         }
     }
@@ -235,11 +263,13 @@ export default {
 
                         &:hover {
                             background-color: $colorA;
-                            .children{
+
+                            .children {
                                 display: block;
                             }
                         }
-                        .children{
+
+                        .children {
                             display: none;
                             position: absolute;
                             width: 962px;
@@ -247,22 +277,26 @@ export default {
                             left: 264px;
                             background-color: $colorG;
                             border: 1px solid $colorH;
-                            transition: all 1s;//没用
-                            ul{
+                            transition: all 1s; //没用
+
+                            ul {
                                 display: flex;
                                 // justify-content: space-between;
                                 height: 75px;
-                                li{
+
+                                li {
                                     height: 75px;
                                     line-height: 75px;
                                     flex: 1;
                                     padding-left: 23px;
                                 }
-                                a{
+
+                                a {
                                     color: $colorB;
                                     font-size: 14px;
                                 }
-                                img{
+
+                                img {
                                     width: 42px;
                                     height: 35px;
                                     vertical-align: middle;
@@ -289,18 +323,90 @@ export default {
             }
         }
 
-        .ads-box{
+        .ads-box {
             @include flex();
-            margin-top: 14px;
+            margin-top: 54px;
             margin-bottom: 31px;
-            a{
+
+            a {
                 width: 296px;
                 height: 167px;
             }
         }
 
-        .banner{
+        .banner {
             margin-bottom: 50px;
+        }
+
+        .product-box{
+            background-color: $colorJ;
+            padding: 30px 0 50px;
+            h2{
+                font-size: $fontF;
+                height: 21px;
+                line-height: 21px;
+                color: $colorB;
+                margin-bottom: 20px;
+            }
+            .wrapper{
+                display: flex;
+                .banner-left{
+                    margin-right: 16px;
+                    img{
+                        width: 224px;
+                        height: 619px;
+                    }
+                }
+                .list-box{
+                    .list{
+                        @include flex();
+                        width: 986px;
+                        margin-bottom: 14px;
+                        &:last-child{
+                            margin-bottom: 0;
+                        }
+                        .item{
+                            width: 236px;
+                            height: 302px;
+                            background-color: $colorG;
+                            text-align: center;
+                            span{
+
+                            }
+                            .item-img{
+                                img{
+                                    height: 195px;
+                                }
+                            }
+                            .item-info{
+                                h3{
+                                    font-size: $fontJ;
+                                    color: $colorB;
+                                    line-height: $fontJ;
+                                    font-weight: bold;
+                                }
+                                p{
+                                    color: $colorD;
+                                    line-height: 13px;
+                                    margin: 6px auto 13px;
+                                }
+                                .price{
+                                    color: #F20A0A;
+                                    font-size: $fontJ;
+                                    font-weight: bold;
+                                    cursor:pointer;
+                                    &:after{
+                                        @include bgImg(22px,22px,'/public/imgs/icon-cart-hover.png');
+                                        content:' ';
+                                        margin-left: 5px;
+                                        vertical-align: middle;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
