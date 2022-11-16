@@ -9,6 +9,8 @@ import VueAxios from 'vue-axios'
 import App from './App.vue'
 // 引入懒加载
 import VueLazyLoad from 'vue-lazyload'
+//引入cookie
+import VueCookie from 'vue-cookie'
 
 
 /* 根据接口代理来配置请求地址 */
@@ -28,6 +30,7 @@ axios.interceptors.response.use(function(response){
     window.location.href='/#/login';
   }else{
     alert(res.msg);
+    return Promise.reject(res); //失败时使用reject抛出异常
   }
 });
 
@@ -37,6 +40,8 @@ Vue.use(VueAxios,axios)
 Vue.use(VueLazyLoad,{
   loading:'/imgs/loading-svg/loading-bars.svg'
 })
+//使用cookie
+Vue.use (VueCookie);
 Vue.config.productionTip = false
 
 new Vue({
