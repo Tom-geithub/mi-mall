@@ -6,6 +6,8 @@
                 <div class="btn">立即购买</div>
             </template>
         </product-param>
+        <div class="h">123</div>
+        <div class="h">123</div><div class="h">123</div><div class="h">123</div><div class="h">123</div><div class="h">123</div><div class="h">123</div>
     </div>
 </template>
 <script>
@@ -20,6 +22,10 @@ export default{
 
 <style lang="scss" scoped>
     .product{
+        .h{
+            background-color: green;
+            height: 150px;
+        }
         .btn{
             margin-left: 10px;
         }
