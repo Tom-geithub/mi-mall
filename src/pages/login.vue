@@ -39,7 +39,7 @@
 
 
 <script>
-//   import { mapActions } from "vuex"; //从vuex中解构mapActions对象
+  import { mapActions } from "vuex"; 
 export default {
     name: "mall-login",
     data() {
@@ -59,15 +59,14 @@ export default {
                     password, //传参 简写
                 })
                 .then((res) => {
-                    this.$cookie.set("userId", res.id, { expires: "1M" }); //设置用户ID
-                    /*  登录时通过dispatch派发action行为saveUserName,action行为会提交commit到
-                   mutation,mutation会自动提交到state状态里面去做出改变.从而状态会重新重新渲染视图. */
-                    // this.$store.dispatch("saveUserName",res.username);//读取后,保存用户名
-                    // this.saveUserName(res.username);
+                    this.$cookie.set("userId", res.id, { expires: "1M" }); //存在时间一个月
+                    //触发vuex的aaction的方法,保存username到vuex
+                    // this.$store.dispatch('saveUserName',res.username);
+                    this.saveUserName(res.username);
                     this.$router.push("/index"); //回到首页
                 });
         },
-        //   ...mapActions(["saveUserName"]),
+          ...mapActions(["saveUserName"]),
         register() {
             this.axios
                 .post("/user/login", {

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import router from './router'
+//引入store
 import store from './store'
 //让每个页面都可以使用axios
 import axios from 'axios'
@@ -11,6 +12,7 @@ import App from './App.vue'
 import VueLazyLoad from 'vue-lazyload'
 //引入cookie
 import VueCookie from 'vue-cookie'
+
 
 
 /* 根据接口代理来配置请求地址 */
@@ -48,7 +50,7 @@ Vue.use(VueCookie);
 Vue.config.productionTip = false
 
 new Vue({
-  router,
   store,
+  router,
   render: h => h(App)
 }).$mount('#app')

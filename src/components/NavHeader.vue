@@ -10,12 +10,12 @@
                     <a href="javascript:;">协议规则</a>
                 </div>
                 <div class="topbar-user">
-                    <a href="javascript:;" v-if="username">{{username}}</a>
+                    <a href="javascript:;" v-if="username">{{ username }}</a>
                     <a href="javascript:;" v-if="!username" @click="login">登录</a>
                     <a href="javascript:;" v-if="username">我的订单</a>
                     <a href="javascript:;" class="my-cart" @click="goToCart">
                         <span class="icon-cart"></span>
-                        购物车
+                        购物车{{ this.cartCount }}
                     </a>
                 </div>
             </div>
@@ -32,17 +32,17 @@
                     <div class="item-menu">
                         <span>小米手机</span>
                         <div class="children">
-                             <ul>
-                                <li class="product" v-for="(item,index) in phoneList" :key="index">
-                                    <a :href="'/#/product/'+item.id" target="_blank">
+                            <ul>
+                                <li class="product" v-for="(item, index) in phoneList" :key="index">
+                                    <a :href="'/#/product/' + item.id" target="_blank">
                                         <div class="pro-img">
                                             <img :src="item.mainImage" :alt="item.subtitle">
                                         </div>
-                                        <div class="pro-name">{{item.name}}</div>
-                                        <div class="pro-price">{{item.price | currency}}</div>
+                                        <div class="pro-name">{{ item.name }}</div>
+                                        <div class="pro-price">{{ item.price | currency }}</div>
                                     </a>
                                 </li>
-                             </ul>
+                            </ul>
                         </div>
                     </div>
                     <div class="item-menu">
@@ -69,38 +69,48 @@
 
   
 <script>
+import { mapState } from 'vuex';
 export default {
     name: "nav-header",
-    data (){
-        return{
-            username:'',
-            phoneList:[]
+    data() {
+        return {
+            // username:'admin',
+            phoneList: []
         }
     },
-    filters:{
-        currency(val){
-            if(!val) return '0.00';
-            return val.toFixed(2)+'元';
+    computed: {
+       /*  username() {
+            return this.$store.state.username;
+        },
+        cartCount() {
+            return this.$store.state.cartCount;
+        } */
+        ...mapState(['username','cartCount'])
+    },
+    filters: {
+        currency(val) {
+            if (!val) return '0.00';
+            return val.toFixed(2) + '元';
         }
     },
-    mounted (){
+    mounted() {
         this.getProductList();
     },
-    methods:{
-        login (){
+    methods: {
+        login() {
             this.$router.push('/login');
         },
-        getProductList(){
-            this.axios.get('/products',{
-                params:{
-                    categoryId:'100012',
-                    pageSize:6
+        getProductList() {
+            this.axios.get('/products', {
+                params: {
+                    categoryId: '100012',
+                    pageSize: 6
                 }
-            }).then((res)=>{
-                    this.phoneList=res.list; 
+            }).then((res) => {
+                this.phoneList = res.list;
             })
         },
-        goToCart (){
+        goToCart() {
             this.$router.push('/cart');
             //使用该方法才能跳转,获取参数将push改成params即可
         }
@@ -142,7 +152,7 @@ export default {
                 margin-right: 0;
 
                 .icon-cart {
-                    @include bgImg(16px,12px,'/public/imgs/icon-cart-checked.png');
+                    @include bgImg(16px, 12px, '/public/imgs/icon-cart-checked.png');
                     background-size: contain;
                 }
             }
@@ -168,13 +178,13 @@ export default {
 
                     &:before {
                         content: ' ';
-                        @include bgImg(55px,55px,'/public/imgs/mi-logo.png',55px);
+                        @include bgImg(55px, 55px, '/public/imgs/mi-logo.png', 55px);
                         transition: margin .2s; //过渡动画
                     }
 
                     &:after {
                         content: ' ';
-                        @include bgImg(55px,55px,'/public/imgs/mi-home.png',55px);
+                        @include bgImg(55px, 55px, '/public/imgs/mi-home.png', 55px);
                         background-size: 55px;
                     }
 
@@ -186,41 +196,47 @@ export default {
                 }
             }
 
-            .header-menu{
+            .header-menu {
                 display: inline-block;
                 width: 643px;
                 padding-left: 209px;
-                .item-menu{
+
+                .item-menu {
                     display: inline-block;
                     color: #333333;
                     font-weight: bold;
                     font-size: 16px;
                     line-height: 112px;
                     margin-right: 20px;
-                    span{
-                        cursor:pointer;//让鼠标移上去是小手标志
+
+                    span {
+                        cursor: pointer; //让鼠标移上去是小手标志
                     }
-                    &:hover{
-                        color:$colorA;
-                        .children{
+
+                    &:hover {
+                        color: $colorA;
+
+                        .children {
                             height: 220px;
                             opacity: 1;
                         }
                     }
-                    .children{
+
+                    .children {
                         position: absolute;
                         top: 112px;
-                        left:0;
+                        left: 0;
                         width: 1226px;
-                        height: 0;//默认关闭状态
-                        opacity: 0;//透明度 隐藏border下面的阴影
-                        overflow: hidden;//让内容隐藏起来
+                        height: 0; //默认关闭状态
+                        opacity: 0; //透明度 隐藏border下面的阴影
+                        overflow: hidden; //让内容隐藏起来
                         border-top: 1px solid #e5e5e5;
-                        box-shadow: 0px 7px 6px 0px rgba(0,0,0,0.11);
+                        box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
                         z-index: 10;
-                        transition:all .5s;
+                        transition: all .5s;
                         background-color: #ffffff;
-                        .product{
+
+                        .product {
                             position: relative;
                             float: left;
                             width: 16.6%;
@@ -228,37 +244,44 @@ export default {
                             font-size: 12px;
                             line-height: 12px;
                             text-align: center;
-                            a{
-                                display:inline-block;
+
+                            a {
+                                display: inline-block;
                             }
-                            img{
-                                width:auto;
+
+                            img {
+                                width: auto;
                                 height: 111px;
                                 margin-top: 26px;
                             }
-                            .pro-img{
+
+                            .pro-img {
                                 height: 137px;
                             }
-                            .pro-name{
+
+                            .pro-name {
                                 font-weight: bold;
                                 margin-top: 19px;
                                 margin-bottom: 8px;
                                 color: $colorB;
                             }
-                            .pro-price{
+
+                            .pro-price {
                                 color: $colorA;
                             }
+
                             //图片之间的竖线
-                            &:before{
-                                content: ' ';//这个必须要有,没有就不能展示
+                            &:before {
+                                content: ' '; //这个必须要有,没有就不能展示
                                 position: absolute;
                                 top: 28px;
-                                right:0;
+                                right: 0;
                                 border-left: 1px solid $colorF;
                                 height: 100px;
                                 width: 1px;
                             }
-                            &:last-child:before{
+
+                            &:last-child:before {
                                 display: none;
                             }
                         }
@@ -266,14 +289,16 @@ export default {
                 }
             }
 
-            .header-search{
+            .header-search {
                 width: 319px;
-                .wrapper{
+
+                .wrapper {
                     height: 50px;
                     border: 1px solid #E0E0E0;
                     display: flex;
                     align-items: center;
-                    input{
+
+                    input {
                         border: none;
                         box-sizing: border-box;
                         border-right: 1px solid #E0E0E0;
@@ -281,8 +306,9 @@ export default {
                         height: 50px;
                         padding-left: 14px;
                     }
-                    a{
-                        @include bgImg(18px,18px,'/public/imgs/icon-search.png');
+
+                    a {
+                        @include bgImg(18px, 18px, '/public/imgs/icon-search.png');
                         margin-left: 17px;
                     }
                 }
