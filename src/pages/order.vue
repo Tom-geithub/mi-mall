@@ -4,16 +4,16 @@
     <div>
         <OrderHeaderVue></OrderHeaderVue>
         <router-view></router-view>
-        <OrderFooterVue></OrderFooterVue>
+        <NavFooterVue></NavFooterVue>
     </div>
 </template>
 <script>
-import OrderFooterVue from '@/components/OrderFooter.vue';
+import NavFooterVue from '@/components/NavFooter.vue';
 import OrderHeaderVue from '@/components/OrderHeader.vue';
 export default {
     name: 'nav-order',
     components:{
-        OrderFooterVue,
+        NavFooterVue,
         OrderHeaderVue
     }
 }
