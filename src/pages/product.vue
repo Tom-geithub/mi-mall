@@ -1,16 +1,16 @@
 <template>
     <div class="product">
         <!-- 引入产品参数组件 -->
-        <product-param>
+        <product-param :title="product.name">
             <!-- v-slot:xxx（可简写为#xxx） -->
             <template v-slot:buy>
-                <button class="btn">立即购买</button>
+                <button class="btn" @click="buy">立即购买</button>
             </template>
         </product-param>
         <div class="content">
             <div class="item-bg">
-                <h2>小米8</h2>
-                <h3>8周年旗舰</h3>
+                <h2>{{ product.name }}</h2>
+                <h3>{{ product.subtitle }}</h3>
                 <p>
                     <a href="" id="">全球首款双频 GP</a>
                     <span>|</span>
@@ -21,7 +21,7 @@
                     <a href="" id="">红外人脸识别</a>
                 </p>
                 <div class="price">
-                    <span>￥<em>2599</em></span>
+                    <span>￥<em>{{ product.price }}</em></span>
                 </div>
             </div>
             <div class="item-bg-2"></div>
@@ -58,11 +58,11 @@
                 <!-- muted静音播放 autoplay自动播放 -->
 
                 <!-- animation方法 -->
-                <div class="video-bg" @click="showSlide='slideDown'"></div>
+                <div class="video-bg" @click="showSlide = 'slideDown'"></div>
                 <div class="video-box">
-                    <div class="overlay" v-if="showSlide=='slideDown'"></div>
+                    <div class="overlay" v-if="showSlide == 'slideDown'"></div>
                     <div class="video" :class="showSlide">
-                        <span class="icon-close" @click="showSlide='slideUp'"></span>
+                        <span class="icon-close" @click="showSlide = 'slideUp'"></span>
                         <video src="/imgs/product/video.mp4" muted autoplay controls></video>
                         <!-- muted静音播放 autoplay自动播放 -->
                     </div>
@@ -85,7 +85,8 @@ export default {
     data() {
         return {
             // showSlide:false;//transition方法
-            showSlide:'',//animation方法
+            showSlide: '',//animation方法
+            product: {},
             swiperOption: {
                 autoplay: true,
                 slidesPerView: 3,
@@ -98,6 +99,21 @@ export default {
             },
         };
     },
+    mounted() {
+        this.getProductInfo();
+    },
+    methods: {
+        getProductInfo() {
+            let id = this.$route.params.id;
+            this.axios.get(`/products/${id}`).then((res) => {
+                this.product = res;
+            })
+        },
+        buy () {
+            let id = this.$route.params.id;
+            this.$router.push(`/detail/${id}`);
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
@@ -199,6 +215,7 @@ export default {
             }
 
             .video-box {
+
                 // 底层灰色背景板
                 .overlay {
                     @include position(fixed);
@@ -206,26 +223,31 @@ export default {
                     opacity: 0.4;
                     z-index: 10;
                 }
-                @keyframes slideDown{
-                    from{
+
+                @keyframes slideDown {
+                    from {
                         top: -50%;
                         opacity: 0;
                     }
-                    to{
+
+                    to {
                         top: 50%;
                         opacity: 1;
                     }
                 }
-                @keyframes slideUp{
-                    from{
+
+                @keyframes slideUp {
+                    from {
                         top: 50%;
                         opacity: 1;
                     }
-                    to{
+
+                    to {
                         top: -50%;
                         opacity: 0;
                     }
                 }
+
                 // 视频
                 .video {
                     position: fixed;
@@ -235,7 +257,7 @@ export default {
                     z-index: 10;
                     width: 1000px;
                     height: 536px;
-                    
+
                     //transition方法
                     // opacity:0;
                     // transition: all .6s;
@@ -246,12 +268,14 @@ export default {
 
                     //animation方法
                     opacity: 1;
-                    &.slideDown{
-                        animation:slideDown .6s linear;//linear匀速
+
+                    &.slideDown {
+                        animation: slideDown .6s linear; //linear匀速
                         top: 50%;
                     }
-                    &.slideUp{
-                        animation:slideUp .6s linear;//linear匀速
+
+                    &.slideUp {
+                        animation: slideUp .6s linear; //linear匀速
                     }
 
                     // 关闭按键
@@ -263,6 +287,7 @@ export default {
                         cursor: pointer;
                         z-index: 11;
                     }
+
                     video {
                         width: 100%;
                         height: 100%;
