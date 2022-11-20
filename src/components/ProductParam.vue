@@ -53,6 +53,7 @@ export default {
     height: 70px;
     line-height: 70px;
     border-top: 1px solid $colorH;
+    z-index: 10;
     &.is_fixed{
         position: fixed;//绝对定位
         top: 0;

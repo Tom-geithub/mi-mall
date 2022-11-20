@@ -33,6 +33,7 @@ axios.interceptors.response.use(function (response) {
     if (path != '#/index') {
       window.location.href = '/#/login';
     }
+    return Promise.reject(res);//防止进入login页面通过其他方法再次跳转到其他页面
   } else {
     alert(res.msg);
     return Promise.reject(res); //失败时使用reject抛出异常
