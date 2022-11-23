@@ -12,6 +12,9 @@ import App from './App.vue'
 import VueLazyLoad from 'vue-lazyload'
 //引入cookie
 import VueCookie from 'vue-cookie'
+// 引入element-ui
+import { Message } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 
 
@@ -35,7 +38,7 @@ axios.interceptors.response.use(function (response) {
     }
     return Promise.reject(res);//防止进入login页面通过其他方法再次跳转到其他页面
   } else {
-    alert(res.msg);
+    this.$message.warning(res.msg);
     return Promise.reject(res); //失败时使用reject抛出异常
   }
 });
@@ -49,6 +52,10 @@ Vue.use(VueLazyLoad, {
 //使用cookie
 Vue.use(VueCookie);
 Vue.config.productionTip = false
+//使用element-ui
+Vue.component(Message)
+// 让massage可以通过this来调用
+Vue.prototype.$message=Message;
 
 new Vue({
   store,

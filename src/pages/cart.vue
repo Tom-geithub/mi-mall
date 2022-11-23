@@ -104,13 +104,13 @@
             selected = item.productSelected;
         if(type == '-'){
             if(quantity <=1){
-              alert("商品至少为一件");
+              this.$message.warning("商品至少为一件");
               return;
             }
             --quantity;
         }else if(type == "+"){ 
            if(quantity >=item.productStock){
-              alert("商品购买数量不能超过库存数量");
+              this.$message.warning("商品购买数量不能超过库存数量");
               return;
             }
             ++quantity;
@@ -147,7 +147,7 @@
         //购物车是否全选，这里every返回的是bool类型
         let isCheck=this.list.every(item=>!item.productSelected);
         if(isCheck){
-          alert("请选择一件商品");
+          this.$message.warning("请选择一件商品");
         }else{
           this.$router.push("/order/confirm");
         }
