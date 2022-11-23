@@ -97,7 +97,8 @@
         this.axios.get("/carts").then((res) => {
           this.renderData(res);
         });
-      },//更新购物车数量和单选状态
+      },
+      //更新购物车数量和单选状态
       updataCart(item,type){
         let quantity = item.quantity,
             selected = item.productSelected;
@@ -115,11 +116,13 @@
             ++quantity;
         }else{
           selected= !item.productSelected;// 单选
-        }//更新商品信息
+        }
+        //更新商品信息
         this.axios.put(`/carts/${item.productId}`,{quantity,selected}).then((res)=>{
           this.renderData(res);
         })
-      },//删除功能
+      },
+      //删除功能
       delProduct(item){
         this.axios.delete(`/carts/${item.productId}`).then((res)=>{
           this.renderData(res);
