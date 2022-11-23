@@ -59,11 +59,16 @@ export default {
                     password, //传参 简写
                 })
                 .then((res) => {
-                    this.$cookie.set("userId", res.id, { expires: "1M" }); //存在时间一个月
+                    this.$cookie.set("userId", res.id, { expires: 'Session' }); //过期时间为一个会话
                     //触发vuex的aaction的方法,保存username到vuex
                     // this.$store.dispatch('saveUserName',res.username);
                     this.saveUserName(res.username);
-                    this.$router.push("/index"); //回到首页
+                    this.$router.push({
+                        name:'index',
+                        params:{
+                            from:'login'
+                        }
+                    }); //回到首页
                 });
         },
           ...mapActions(["saveUserName"]),
