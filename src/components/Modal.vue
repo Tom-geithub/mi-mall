@@ -33,7 +33,7 @@ export default {
         // 弹框类型：小small，中middle，大large，表单form
         modalType: {
             type: String,
-            dafault: 'form'
+            default: 'form'
         },
         //弹框标题
         title: String,

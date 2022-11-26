@@ -41,6 +41,10 @@ axios.interceptors.response.use(function (response) {
     this.$message.warning(res.msg);
     return Promise.reject(res); //失败时使用reject抛出异常
   }
+},(error)=>{//上面的function拦截的是业务层面的（接口都能访问），这里拦截的是http状态码请求的
+  let res=error.response;
+  Message.error(res.data.message);
+  return Promise.reject(res);
 });
 
 
