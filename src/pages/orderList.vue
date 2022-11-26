@@ -77,13 +77,13 @@
             </el-button>
           </div>
           <!-- 滚动加载更多 -->
-          <!-- <div class="scroll-more"
+          <div class="scroll-more"
             v-infinite-scroll="scrollMore"
-            infinite-scroll-disabled="true"
+            infinite-scroll-disabled="busy"
             infinite-scroll-distance="410"
           >
              <img src="/imgs/loading-svg/loading-spinning-bubbles.svg" v-show="loading">
-          </div> -->
+          </div>
           <!-- 订单列表无数据 -->
           <no-data v-if="!loading&&list.length==0"></no-data>
         </div>
@@ -96,7 +96,7 @@
   import NoData from "./../components/NoData.vue"
   import loading from './loading.vue';
   import {Pagination,Button} from "element-ui";
-  // import infiniteScroll from "vue-infinite-scroll";
+  import infiniteScroll from "vue-infinite-scroll";
   export default{
     name:'order-list',
     components:{
@@ -106,12 +106,12 @@
       [Pagination.name]:Pagination,
       [Button.name]:Button
     },
-    // directives:{infiniteScroll}, //配置
+    directives:{infiniteScroll}, //配置
     data(){
       return{
         loading:false,//默认显示,数据回来时关闭
         list:[],
-        pageSize:2,//一页十条
+        pageSize:10,//一页十条
         pageNum:1,//当前页数
         total:0,
         showNextPage:true,//加载更多:是否显示按钮
@@ -135,7 +135,7 @@
           // this.list=[]||res.list;
           this.list=this.list.concat(res.list);//拼接原数组从而实现加载更多
           this.total=res.total;
-          this.showNextPage=res.hasNextPage;
+          this.showNextPage=res.hasNextPage;//是否有下一页
           this.busy=false; 
         }).catch(()=>{
           this.loading=false;
@@ -155,15 +155,18 @@
             orderNo
           }
         })
-      },//第一种方法:分页器
+      },
+      //第一种方法:分页器
       handleChange(pageNum){
         this.pageNum=pageNum;
         this.getOrderList();
-      },//第二种方法:加载更多按钮
+      },
+      //第二种方法:加载更多按钮
       loadMore(){
         this.pageNum++;
         this.getOrderList();
-      },//第三种方法:滚动加载,通过npm插件实现
+      },
+      //第三种方法:滚动加载,通过npm插件实现
       scrollMore(){
         this.busy=true;//禁止滚动
         setTimeout(()=>{
@@ -180,7 +183,7 @@
           }
         }).then((res)=>{
           this.list=this.list.concat(res.list);//拼接原数组从而实现加载更多
-          this.loading=true;//请求结束,图片不加载
+          this.loading=false;//请求结束,图片不加载
           if(res.hasNextPage){
             this.busy=false;//开启滚动
           }else{
