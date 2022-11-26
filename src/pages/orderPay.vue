@@ -1,10 +1,11 @@
 <template>
   <div class="order-pay">
-    <!-- <order-header title="订单支付">
-        <template v-slot:tip>
-          <span>请谨防钓鱼链接或诈骗电话，了解更多</span>
-        </template>
-      </order-header> -->
+    <order-header-vue title="订单支付">
+            <template v-slot:tip>
+                <span>请谨防钓鱼连接或诈骗电话，了解更多</span>
+            </template>
+        </order-header-vue>
+
     <div class="wrapper">
       <div class="container">
         <div class="order-wrap">
@@ -71,6 +72,7 @@
 import ScanPayCode from './../components/ScanPayCode'
 import QRCode from "qrcode"
 import ModalVue from '@/components/Modal.vue'
+import OrderHeaderVue from '@/components/OrderHeader.vue'
 export default {
   name: 'order-pay',
   data() {
@@ -89,7 +91,8 @@ export default {
   },
   components: {
     ScanPayCode,
-    ModalVue
+    ModalVue,
+    OrderHeaderVue
   },
   mounted() {
     this.getOrderDateil();

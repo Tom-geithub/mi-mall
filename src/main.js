@@ -13,7 +13,7 @@ import VueLazyLoad from 'vue-lazyload'
 //引入cookie
 import VueCookie from 'vue-cookie'
 // 引入element-ui
-import { Message } from 'element-ui';
+import {Message} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 
@@ -60,7 +60,6 @@ Vue.config.productionTip = false
 Vue.component(Message)
 // 让massage可以通过this来调用
 Vue.prototype.$message=Message;
-
 new Vue({
   store,
   router,
