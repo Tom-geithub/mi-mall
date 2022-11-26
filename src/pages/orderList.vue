@@ -59,9 +59,10 @@
             </div>
 
           </div>
-          <no-data v-if="!loading&&list.length==0"></no-data>
+          <!-- 分页功能 -->
           <el-pagination
-          class="pagination"
+            v-if="false"
+            class="pagination"
             background
             layout="prev,pager,next"
             :pageSize="pageSize"
@@ -69,6 +70,22 @@
             @current-change="handleChange"
           >
           </el-pagination>
+          <!-- 按钮加载更多 -->
+          <div class="load-more" v-if="showNextPage">
+            <el-button type="primary" :loading="loading" @click="loadMore">
+              加载更多
+            </el-button>
+          </div>
+          <!-- 滚动加载更多 -->
+          <!-- <div class="scroll-more"
+            v-infinite-scroll="scrollMore"
+            infinite-scroll-disabled="true"
+            infinite-scroll-distance="410"
+          >
+             <img src="/imgs/loading-svg/loading-spinning-bubbles.svg" v-show="loading">
+          </div> -->
+          <!-- 订单列表无数据 -->
+          <no-data v-if="!loading&&list.length==0"></no-data>
         </div>
       </div>
     </div>
@@ -78,22 +95,27 @@
   import OrderHeader from './../components/OrderHeader'
   import NoData from "./../components/NoData.vue"
   import loading from './loading.vue';
-  import {Pagination} from "element-ui";
+  import {Pagination,Button} from "element-ui";
+  // import infiniteScroll from "vue-infinite-scroll";
   export default{
     name:'order-list',
     components:{
       OrderHeader,
       loading,
       NoData,
-      [Pagination.name]:Pagination
+      [Pagination.name]:Pagination,
+      [Button.name]:Button
     },
+    // directives:{infiniteScroll}, //配置
     data(){
       return{
-        loading:true,//默认显示,数据回来时关闭
+        loading:false,//默认显示,数据回来时关闭
         list:[],
-        pageSize:10,//一页十条
+        pageSize:2,//一页十条
         pageNum:1,//当前页数
-        total:0
+        total:0,
+        showNextPage:true,//加载更多:是否显示按钮
+        busy:false,//滚动加载是否触发
       }
     },
     mounted(){
@@ -101,15 +123,20 @@
     },
     methods:{
       getOrderList(){
+        this.loading=true;
+        this.busy=true; //bug:首次就会加载第二页
         this.axios.get("/orders",{
           params:{
+            pageSize:this.pageSize,//设置订单展示两条数据
             pageNum:this.pageNum,
           }
         }).then((res)=>{
           this.loading=false;
           // this.list=[]||res.list;
-          this.list=res.list;
+          this.list=this.list.concat(res.list);//拼接原数组从而实现加载更多
           this.total=res.total;
+          this.showNextPage=res.hasNextPage;
+          this.busy=false; 
         }).catch(()=>{
           this.loading=false;
         })
@@ -128,11 +155,39 @@
             orderNo
           }
         })
-      },
+      },//第一种方法:分页器
       handleChange(pageNum){
         this.pageNum=pageNum;
         this.getOrderList();
-      }
+      },//第二种方法:加载更多按钮
+      loadMore(){
+        this.pageNum++;
+        this.getOrderList();
+      },//第三种方法:滚动加载,通过npm插件实现
+      scrollMore(){
+        this.busy=true;//禁止滚动
+        setTimeout(()=>{
+        this.pageNum++;
+        this.getList();
+        },500);
+      },//专门给滚动加载使用
+      getList(){
+        this.loading=true;//请求开始,加载图片显示
+        this.axios.get("/orders",{
+          params:{
+            pageSize:10,//设置订单展示数据数量
+            pageNum:this.pageNum,
+          }
+        }).then((res)=>{
+          this.list=this.list.concat(res.list);//拼接原数组从而实现加载更多
+          this.loading=true;//请求结束,图片不加载
+          if(res.hasNextPage){
+            this.busy=false;//开启滚动
+          }else{
+            this.busy=true;//禁止滚动
+          }
+        })
+      },
     }
   }
 </script>
