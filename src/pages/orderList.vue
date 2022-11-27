@@ -61,7 +61,7 @@
           </div>
           <!-- 分页功能 -->
           <el-pagination
-            v-if="false"
+            v-if="true"
             class="pagination"
             background
             layout="prev,pager,next"
@@ -71,15 +71,16 @@
           >
           </el-pagination>
           <!-- 按钮加载更多 -->
-          <div class="load-more" v-if="showNextPage">
+          <div class="load-more" v-if="false">
             <el-button type="primary" :loading="loading" @click="loadMore">
               加载更多
             </el-button>
           </div>
           <!-- 滚动加载更多 -->
           <div class="scroll-more"
+            v-if="false"
             v-infinite-scroll="scrollMore"
-            infinite-scroll-disabled="busy"
+            infinite-scroll-disabled="true"
             infinite-scroll-distance="410"
           >
              <img src="/imgs/loading-svg/loading-spinning-bubbles.svg" v-show="loading">
@@ -133,7 +134,8 @@
         }).then((res)=>{
           this.loading=false;
           // this.list=[]||res.list;
-          this.list=this.list.concat(res.list);//拼接原数组从而实现加载更多
+          // this.list=this.list.concat(res.list);//拼接原数组从而实现加载更多
+          this.list=res.list;//只使用pagination时不要拼接
           this.total=res.total;
           this.showNextPage=res.hasNextPage;//是否有下一页
           this.busy=false; 
@@ -173,12 +175,13 @@
         this.pageNum++;
         this.getList();
         },500);
-      },//专门给滚动加载使用
+      },
+      //专门给滚动加载使用
       getList(){
         this.loading=true;//请求开始,加载图片显示
         this.axios.get("/orders",{
           params:{
-            pageSize:10,//设置订单展示数据数量
+            pageSize:this.pageSize,//设置订单展示数据数量
             pageNum:this.pageNum,
           }
         }).then((res)=>{
