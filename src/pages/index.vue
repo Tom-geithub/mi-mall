@@ -142,7 +142,7 @@ export default {
                 effect: 'cube',//动画为砖块
                 cubeEffect: {
                     slideShadows: true,
-                    shadow: true,
+                    shadow: false,
                     shadowOffset: 100,
                     shadowScale: 0.6
                 },
@@ -365,7 +365,7 @@ export default {
 
         .ads-box {
             @include flex();
-            margin-top: 54px;
+            margin-top: 34px;
             margin-bottom: 31px;
 
             a {

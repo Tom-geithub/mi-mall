@@ -6,7 +6,7 @@ module.exports = ({
     proxy:{
       '/api':{
         target:'http://mall-pre.springboot.cn',
-        //是否把主机的url设置为原点（上面代理的地址从头开始作为新的url）
+        //设置为true时会将原来url中的Host（localhost:8080）替换为上面的target
         chageOrigin:true,
         pathRewrite:{
           '/api':''
