@@ -20,6 +20,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 /* 根据接口代理来配置请求地址 */
 axios.defaults.baseURL = '/api';
+// 服务器如果超过8080ms没有响应就会停止axios
 axios.defaults.timeout = 8080;
 
 /* 根据接口环境变量来获取请求地址(使用其他两种跨域方式的情况下) */
@@ -33,10 +34,10 @@ axios.interceptors.response.use(function (response) {
     return res.data;
   } else if (res.status == 10)//未登录时设置status为10
   {
-    if (path != '#/index') {
-      window.location.href = '/#/login';
-    }
-    return Promise.reject(res);//防止进入login页面通过其他方法再次跳转到其他页面
+    // if (path != '#/index') {
+    //   window.location.href = '/#/login';
+    // }
+    // return Promise.reject(res);//防止进入login页面通过其他方法再次跳转到其他页面
   } else {
     this.$message.warning(res.msg);
     return Promise.reject(res); //失败时使用reject抛出异常

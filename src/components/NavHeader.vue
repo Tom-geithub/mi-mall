@@ -127,6 +127,7 @@ export default {
                 }
             }).then((res) => {
                 this.phoneList = res.list;
+                console.log(this.phoneList);
             })
         },
         goToCart() {

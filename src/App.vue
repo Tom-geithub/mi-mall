@@ -17,6 +17,9 @@ export default{
     }
   },
   mounted (){
+
+    // storage.setItem('abc',{a:1},'user');
+
     //获取用户信息,只有在登录状态时才执行该操作
     if(this.$cookie.get('userId')){
       this.getUser();

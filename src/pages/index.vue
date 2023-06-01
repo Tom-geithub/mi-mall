@@ -87,17 +87,17 @@
                         <a :href="'/#/product/35'"><img src="/imgs/mix-alpha.jpg" alt=""></a>
                     </div>
                     <div class="list-box">
-                        <div class="list" v-for="(arr,i) in phoneList" :key="i">
-                            <div class="item" v-for="(item,j) in arr" :key="j"> 
+                        <div class="list" v-for="(arr, i) in phoneList" :key="i">
+                            <div class="item" v-for="(item, j) in arr" :key="j">
                                 <!-- 偶数的作为新品 -->
-                                <span :class="{'new-pro':j%2==0}">新品</span>
+                                <span :class="{ 'new-pro': j % 2 == 0 }">新品</span>
                                 <div class="item-img">
                                     <img :src="item.mainImage" alt="">
                                 </div>
                                 <div class="item-info">
-                                    <h3>{{item.name}}</h3>
-                                    <p>{{item.subtitle}}</p>
-                                    <p class="price" @click="addCart(item.id)">{{item.price }}元</p>
+                                    <h3>{{ item.name }}</h3>
+                                    <p>{{ item.subtitle }}</p>
+                                    <p class="price" @click="addCart(item.id)">{{ item.price }}元</p>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +109,9 @@
         <!-- 服务条 -->
         <service-bar></service-bar>
         <!-- 弹窗 -->
-        <modal title="提示" sureText="查看购物车" btnType="1" modal-type="middle" :showModal="showModal" @submit="goTocart" @cancel="showModal=false">
+        <modal title="提示" sureText="查看购物车" btnType="1" modal-type="middle" 
+        :showModal="showModal" @submit="goTocart"
+            @cancel="showModal = false">
             <template v-slot:body>
                 <p>商品添加成功！</p>
             </template>
@@ -221,37 +223,37 @@ export default {
                     img: '/imgs/ads/ads-4.jpg'
                 },
             ],
-            phoneList:[[1,1,1,1],[1,1,1,1]],
-            showModal:false
+            phoneList: [[1, 1, 1, 1], [1, 1, 1, 1]],
+            showModal: false
 
         }
     },
     // 发送异步请求访问接口
-    mounted (){
+    mounted() {
         this.init();
     },
-    methods:{
-        init (){
-            this.axios.get('/products',{
-                params:{
-                    categoryId:100012,
-                    pageSize:14
+    methods: {
+        init() {
+            this.axios.get('/products', {
+                params: {
+                    categoryId: 100012,
+                    pageSize: 14
                 }
-            }).then((res)=>{
-                res.list=res.list.slice(6,14);
-                this.phoneList=[res.list.slice(0,4),res.list.slice(4,8)];
+            }).then((res) => {
+                res.list = res.list.slice(6, 14);
+                this.phoneList = [res.list.slice(0, 4), res.list.slice(4, 8)];
             })
         },
-        addCart (id){
-            this.axios.post('/carts',{
-                productId:id,
-                selected:true
-            }).then((res)=>{
-                this.showModal=true;
+        addCart(id) {
+            this.axios.post('/carts', {
+                productId: id,
+                selected: true
+            }).then((res) => {
+                this.showModal = true;
                 this.$store.dispatch("saveCartCount", res.cartTotalQuantity);
             })
         },
-        goTocart (){
+        goTocart() {
             this.$router.push('cart');
         }
     }
@@ -417,9 +419,8 @@ export default {
                             height: 302px;
                             background-color: $colorG;
                             text-align: center;
-                            span{
 
-                            }
+                            span {}
 
                             .item-img {
                                 img {
@@ -462,7 +463,7 @@ export default {
             }
         }
 
-        
+
     }
 }
 </style>
